@@ -89,7 +89,7 @@ class ViewController: UIViewController, ARSessionDelegate {
         
         if state == NeckStates.faceLeft {
 
-            if leftYaw < -0.5 {
+            if leftYaw < -0.25 {
                 arView.scene.removeAnchor(faceLeftAnchor)
                 faceRightAnchor = try! NeckStretch.loadFaceRight()
                 arView.scene.anchors.append(faceRightAnchor)
@@ -99,7 +99,7 @@ class ViewController: UIViewController, ARSessionDelegate {
         }
         
         if state == NeckStates.faceRight {
-            if rightYaw > 0.5 {
+            if rightYaw > 0.25 {
                 arView.scene.removeAnchor(faceRightAnchor)
                 lookUpAnchor = try! NeckStretch.loadLookUp()
                 arView.scene.anchors.append(lookUpAnchor)
@@ -109,7 +109,7 @@ class ViewController: UIViewController, ARSessionDelegate {
         }
         
         if state == NeckStates.lookUp {
-            if upPitch < -0.5 {
+            if upPitch < -0.25 {
                 arView.scene.removeAnchor(lookUpAnchor)
                 lookDownAnchor = try! NeckStretch.loadLookDown()
                 arView.scene.anchors.append(lookDownAnchor)
@@ -119,7 +119,7 @@ class ViewController: UIViewController, ARSessionDelegate {
         }
         
         if state == NeckStates.lookDown {
-            if downPitch > 0.5 {
+            if downPitch > 0.25 {
                 arView.scene.removeAnchor(lookDownAnchor)
                 tiltLeftAnchor = try! NeckStretch.loadTiltLeft()
                 arView.scene.anchors.append(tiltLeftAnchor)
@@ -129,7 +129,7 @@ class ViewController: UIViewController, ARSessionDelegate {
         }
         
         if state == NeckStates.tiltLeft {
-            if leftRoll < -0.5 {
+            if leftRoll < -0.25 {
                 arView.scene.removeAnchor(tiltLeftAnchor)
                 tiltRightAnchor = try! NeckStretch.loadTiltRight()
                 arView.scene.anchors.append(tiltRightAnchor)
@@ -139,7 +139,7 @@ class ViewController: UIViewController, ARSessionDelegate {
         }
         
         if state == NeckStates.tiltRight {
-            if rightRoll > 0.5 {
+            if rightRoll > 0.25 {
                 arView.scene.removeAnchor(tiltRightAnchor)
                 chinTuckAnchor = try! NeckStretch.loadChinTuck()
                 arView.scene.anchors.append(chinTuckAnchor)
@@ -151,12 +151,26 @@ class ViewController: UIViewController, ARSessionDelegate {
                 
         if state == NeckStates.chinTuck {
             let currentChinTuck = faceAnchor.transform.columns.3[2]
-            if chinTuck - currentChinTuck > 0.04 {
+            if chinTuck - currentChinTuck > 0.02 {
                 arView.scene.removeAnchor(chinTuckAnchor)
                 completeAnchor = try! NeckStretch.loadComplete()
                 arView.scene.anchors.append(completeAnchor)
                 resetAngles()
                 state = NeckStates.complete
+            }
+        }
+        
+        if state == NeckStates.complete {
+            let blendShapes = faceAnchor.blendShapes
+            guard let mouthSmileLeft = blendShapes[.mouthSmileLeft],
+                  let mouthSmileRight = blendShapes[.mouthSmileRight] else { return }
+            
+            if (Double(truncating: mouthSmileLeft) > 0.5 && Double(truncating: mouthSmileRight) > 0.5) {
+                arView.scene.removeAnchor(completeAnchor)
+                startAnchor = try! NeckStretch.loadStart()
+                arView.scene.anchors.append(startAnchor)
+                resetAngles()
+                state = NeckStates.start
             }
         }
         
