@@ -26,7 +26,7 @@ class ViewController: UIViewController, ARSessionDelegate {
     @IBOutlet weak var pitchLabel: UILabel!
     @IBOutlet weak var yawLabel: UILabel!
     @IBOutlet weak var rollLabel: UILabel!
-    var downPitch: Float = 0
+    var initialPitch: Float = 0
     var upPitch: Float = 0
     var rightYaw: Float = 0
     var leftYaw: Float = 0
@@ -105,11 +105,13 @@ class ViewController: UIViewController, ARSessionDelegate {
                 arView.scene.anchors.append(lookUpAnchor)
                 resetAngles()
                 state = NeckStates.lookUp
+                initialPitch = Float(round(1000*(faceAnchor.transform.eulerAnglez.x))/1000)
             }
         }
         
         if state == NeckStates.lookUp {
-            if upPitch < -0.25 {
+            let currentPitch = Float(round(1000*(faceAnchor.transform.eulerAnglez.x))/1000)
+            if initialPitch - currentPitch > 0.25 {
                 arView.scene.removeAnchor(lookUpAnchor)
                 lookDownAnchor = try! NeckStretch.loadLookDown()
                 arView.scene.anchors.append(lookDownAnchor)
@@ -119,7 +121,8 @@ class ViewController: UIViewController, ARSessionDelegate {
         }
         
         if state == NeckStates.lookDown {
-            if downPitch > 0.25 {
+            let currentPitch = Float(round(1000*(faceAnchor.transform.eulerAnglez.x))/1000)
+            if initialPitch + currentPitch > 0.25 {
                 arView.scene.removeAnchor(lookDownAnchor)
                 tiltLeftAnchor = try! NeckStretch.loadTiltLeft()
                 arView.scene.anchors.append(tiltLeftAnchor)
@@ -180,8 +183,8 @@ class ViewController: UIViewController, ARSessionDelegate {
         
         let pitch = Float(round(1000*(faceAnchor.transform.eulerAnglez.x))/1000)
         
-        if pitch > downPitch {
-            downPitch = pitch
+        if pitch > initialPitch {
+            initialPitch = pitch
         }
         
         if pitch < upPitch {
@@ -208,7 +211,7 @@ class ViewController: UIViewController, ARSessionDelegate {
             leftRoll = roll
         }
                 
-        pitchLabel.text = "Pitch Up: \(upPitch) Down: \(downPitch) "
+        pitchLabel.text = "Pitch Up: \(upPitch) Down: \(initialPitch) "
         
         yawLabel.text = "Yaw Left: \(leftYaw) Right: \(rightYaw)"
         
@@ -217,7 +220,7 @@ class ViewController: UIViewController, ARSessionDelegate {
     
     func resetAngles() {
         upPitch = 0
-        downPitch = 0
+        initialPitch = 0
         leftYaw = 0
         rightYaw = 0
         leftRoll = 0
