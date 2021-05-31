@@ -23,27 +23,24 @@ class ViewController: UIViewController, ARSessionDelegate {
     var completeAnchor: NeckStretch.Complete!
     var state = NeckStates.start
     
+    var initialTuck: Float = 0
+    
     @IBOutlet weak var pitchLabel: UILabel!
     @IBOutlet weak var yawLabel: UILabel!
     @IBOutlet weak var rollLabel: UILabel!
-    var initialPitch: Float = 0
-    var upPitch: Float = 0
-    var rightYaw: Float = 0
-    var leftYaw: Float = 0
-    var rightRoll: Float = 0
-    var leftRoll: Float = 0
-    var chinTuck: Float = 0
+    @IBOutlet weak var tuckLabel: UILabel!
+    
+    let config = ARFaceTrackingConfiguration()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let config = ARFaceTrackingConfiguration()
         arView.session.run(config)
         arView.session.delegate = self
         
         startAnchor = try! NeckStretch.loadStart()
         arView.scene.anchors.append(startAnchor)
-        
+                
     }
     
     enum NeckStates {
@@ -80,85 +77,85 @@ class ViewController: UIViewController, ARSessionDelegate {
             if (Double(truncating: leftEyeValue) > 0.5 && Double(truncating: rightEyeValue) < 0.5) ||
                 (Double(truncating: leftEyeValue) < 0.5 && Double(truncating: rightEyeValue) > 0.5) {
                 arView.scene.removeAnchor(startAnchor)
+                arView.session.run(config, options: [.resetTracking, .removeExistingAnchors])
+                
                 faceLeftAnchor = try! NeckStretch.loadFaceLeft()
                 arView.scene.anchors.append(faceLeftAnchor)
-                resetAngles()
-                state = NeckStates.faceLeft
+                self.state = NeckStates.faceLeft
             }
         }
         
         if state == NeckStates.faceLeft {
-
-            if leftYaw < -0.25 {
-                arView.scene.removeAnchor(faceLeftAnchor)
-                faceRightAnchor = try! NeckStretch.loadFaceRight()
-                arView.scene.anchors.append(faceRightAnchor)
-                resetAngles()
-                state = NeckStates.faceRight
-            }
+            let currentYaw = Float(round(1000*(faceAnchor.transform.eulerAnglez.y))/1000)
+            
+            if currentYaw < -0.25 {
+                    arView.scene.removeAnchor(faceLeftAnchor)
+                    faceRightAnchor = try! NeckStretch.loadFaceRight()
+                    arView.scene.anchors.append(faceRightAnchor)
+                    state = NeckStates.faceRight
+                }
         }
         
         if state == NeckStates.faceRight {
-            if rightYaw > 0.25 {
+            let currentYaw = Float(round(1000*(faceAnchor.transform.eulerAnglez.y))/1000)
+
+            if currentYaw > 0.25 {
                 arView.scene.removeAnchor(faceRightAnchor)
                 lookUpAnchor = try! NeckStretch.loadLookUp()
                 arView.scene.anchors.append(lookUpAnchor)
-                resetAngles()
                 state = NeckStates.lookUp
-                initialPitch = Float(round(1000*(faceAnchor.transform.eulerAnglez.x))/1000)
             }
         }
         
         if state == NeckStates.lookUp {
             let currentPitch = Float(round(1000*(faceAnchor.transform.eulerAnglez.x))/1000)
-            if initialPitch - currentPitch > 0.25 {
+            if currentPitch < -0.25 {
                 arView.scene.removeAnchor(lookUpAnchor)
                 lookDownAnchor = try! NeckStretch.loadLookDown()
                 arView.scene.anchors.append(lookDownAnchor)
-                resetAngles()
                 state = NeckStates.lookDown
             }
         }
-        
+
         if state == NeckStates.lookDown {
             let currentPitch = Float(round(1000*(faceAnchor.transform.eulerAnglez.x))/1000)
-            if initialPitch + currentPitch > 0.25 {
+            if currentPitch > 0.25 {
                 arView.scene.removeAnchor(lookDownAnchor)
                 tiltLeftAnchor = try! NeckStretch.loadTiltLeft()
                 arView.scene.anchors.append(tiltLeftAnchor)
-                resetAngles()
                 state = NeckStates.tiltLeft
             }
         }
         
         if state == NeckStates.tiltLeft {
-            if leftRoll < -0.25 {
+            let currentRoll = -Float(round(1000*(faceAnchor.transform.eulerAnglez.z))/1000)
+
+            if currentRoll < -0.25 {
                 arView.scene.removeAnchor(tiltLeftAnchor)
                 tiltRightAnchor = try! NeckStretch.loadTiltRight()
                 arView.scene.anchors.append(tiltRightAnchor)
-                resetAngles()
                 state = NeckStates.tiltRight
             }
         }
         
         if state == NeckStates.tiltRight {
-            if rightRoll > 0.25 {
+            let currentRoll = -Float(round(1000*(faceAnchor.transform.eulerAnglez.z))/1000)
+
+            if currentRoll > 0.25 {
                 arView.scene.removeAnchor(tiltRightAnchor)
                 chinTuckAnchor = try! NeckStretch.loadChinTuck()
                 arView.scene.anchors.append(chinTuckAnchor)
-                resetAngles()
                 state = NeckStates.chinTuck
-                chinTuck = faceAnchor.transform.columns.3[2]
+                initialTuck = faceAnchor.transform.columns.3[2]
             }
         }
                 
         if state == NeckStates.chinTuck {
-            let currentChinTuck = faceAnchor.transform.columns.3[2]
-            if chinTuck - currentChinTuck > 0.02 {
+            let currentTuck = faceAnchor.transform.columns.3[2]
+            if -initialTuck + currentTuck < -0.02 {
                 arView.scene.removeAnchor(chinTuckAnchor)
                 completeAnchor = try! NeckStretch.loadComplete()
                 arView.scene.anchors.append(completeAnchor)
-                resetAngles()
                 state = NeckStates.complete
             }
         }
@@ -172,7 +169,6 @@ class ViewController: UIViewController, ARSessionDelegate {
                 arView.scene.removeAnchor(completeAnchor)
                 startAnchor = try! NeckStretch.loadStart()
                 arView.scene.anchors.append(startAnchor)
-                resetAngles()
                 state = NeckStates.start
             }
         }
@@ -181,50 +177,21 @@ class ViewController: UIViewController, ARSessionDelegate {
     
     func updateLabels(faceAnchor: ARFaceAnchor) {
         
+        let tuck = Float(round(1000*(faceAnchor.transform.columns.3[2]))/1000)
+        
         let pitch = Float(round(1000*(faceAnchor.transform.eulerAnglez.x))/1000)
-        
-        if pitch > initialPitch {
-            initialPitch = pitch
-        }
-        
-        if pitch < upPitch {
-            upPitch = pitch
-        }
         
         let yaw = Float(round(1000*(faceAnchor.transform.eulerAnglez.y))/1000)
         
-        if yaw > rightYaw {
-            rightYaw = yaw
-        }
-        
-        if yaw < leftYaw {
-            leftYaw = yaw
-        }
-        
         let roll = -Float(round(1000*(faceAnchor.transform.eulerAnglez.z))/1000)
         
-        if roll > rightRoll {
-            rightRoll = roll
-        }
-        
-        if roll < leftRoll {
-            leftRoll = roll
-        }
+        tuckLabel.text = "Tuck: \(tuck)"
                 
-        pitchLabel.text = "Pitch Up: \(upPitch) Down: \(initialPitch) "
+        pitchLabel.text = "Pitch: \(pitch) "
         
-        yawLabel.text = "Yaw Left: \(leftYaw) Right: \(rightYaw)"
+        yawLabel.text = "Yaw: \(yaw)"
         
-        rollLabel.text = "Roll Left: \(rightRoll) Right: \(leftRoll)"
-    }
-    
-    func resetAngles() {
-        upPitch = 0
-        initialPitch = 0
-        leftYaw = 0
-        rightYaw = 0
-        leftRoll = 0
-        rightRoll = 0
+        rollLabel.text = "Roll: \(roll)"
     }
     
 }
