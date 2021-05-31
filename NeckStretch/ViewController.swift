@@ -20,7 +20,7 @@ class ViewController: UIViewController, ARSessionDelegate {
     var tiltLeftAnchor: NeckStretch.TiltLeft!
     var tiltRightAnchor: NeckStretch.TiltRight!
     var chinTuckAnchor: NeckStretch.ChinTuck!
-    var completeAnchor: NeckStretch.Complete!
+    var completeAnchor: NeckStretch.Complete1!
     var state = NeckStates.start
     
     var initialTuck: Float = 0
@@ -52,7 +52,7 @@ class ViewController: UIViewController, ARSessionDelegate {
         static let tiltLeft = "tiltLeft"
         static let tiltRight = "tiltRight"
         static let chinTuck = "chinTuck"
-        static let complete = "complete"
+        static let complete = "complete1"
     }
     
     
@@ -154,24 +154,24 @@ class ViewController: UIViewController, ARSessionDelegate {
             let currentTuck = faceAnchor.transform.columns.3[2]
             if -initialTuck + currentTuck < -0.02 {
                 arView.scene.removeAnchor(chinTuckAnchor)
-                completeAnchor = try! NeckStretch.loadComplete()
+                completeAnchor = try! NeckStretch.loadComplete1()
                 arView.scene.anchors.append(completeAnchor)
                 state = NeckStates.complete
             }
         }
         
-        if state == NeckStates.complete {
-            let blendShapes = faceAnchor.blendShapes
-            guard let mouthSmileLeft = blendShapes[.mouthSmileLeft],
-                  let mouthSmileRight = blendShapes[.mouthSmileRight] else { return }
-            
-            if (Double(truncating: mouthSmileLeft) > 0.5 && Double(truncating: mouthSmileRight) > 0.5) {
-                arView.scene.removeAnchor(completeAnchor)
-                startAnchor = try! NeckStretch.loadStart()
-                arView.scene.anchors.append(startAnchor)
-                state = NeckStates.start
-            }
-        }
+//        if state == NeckStates.complete {
+//            let blendShapes = faceAnchor.blendShapes
+//            guard let mouthSmileLeft = blendShapes[.mouthSmileLeft],
+//                  let mouthSmileRight = blendShapes[.mouthSmileRight] else { return }
+//
+//            if (Double(truncating: mouthSmileLeft) > 0.5 && Double(truncating: mouthSmileRight) > 0.5) {
+//                arView.scene.removeAnchor(completeAnchor)
+//                startAnchor = try! NeckStretch.loadStart()
+//                arView.scene.anchors.append(startAnchor)
+//                state = NeckStates.start
+//            }
+//        }
         
     }
     
