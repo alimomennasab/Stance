@@ -44,6 +44,7 @@ class ViewController: UIViewController, ARSessionDelegate {
         arView.session.delegate = self
         
         startAnchor = try! NeckStretch.loadStart()
+        
         arView.scene.anchors.append(startAnchor)
                 
     }
@@ -104,7 +105,7 @@ class ViewController: UIViewController, ARSessionDelegate {
         if state == NeckStates.faceLeft {
             let currentYaw = Float(round(1000*(faceAnchor.transform.eulerAnglez.y))/1000)
             
-            if currentYaw < -0.25 {
+            if currentYaw < -0.4 {
                     arView.scene.removeAnchor(faceLeftAnchor)
                     faceRightAnchor = try! NeckStretch.loadFaceRight()
                     arView.scene.anchors.append(faceRightAnchor)
@@ -115,7 +116,7 @@ class ViewController: UIViewController, ARSessionDelegate {
         if state == NeckStates.faceRight {
             let currentYaw = Float(round(1000*(faceAnchor.transform.eulerAnglez.y))/1000)
 
-            if currentYaw > 0.25 {
+            if currentYaw > 0.4 {
                 arView.scene.removeAnchor(faceRightAnchor)
                 lookUpAnchor = try! NeckStretch.loadLookUp()
                 arView.scene.anchors.append(lookUpAnchor)
@@ -125,7 +126,7 @@ class ViewController: UIViewController, ARSessionDelegate {
         
         if state == NeckStates.lookUp {
             let currentPitch = Float(round(1000*(faceAnchor.transform.eulerAnglez.x))/1000)
-            if currentPitch < -0.25 {
+            if currentPitch < -0.4 {
                 arView.scene.removeAnchor(lookUpAnchor)
                 lookDownAnchor = try! NeckStretch.loadLookDown()
                 arView.scene.anchors.append(lookDownAnchor)
@@ -135,7 +136,7 @@ class ViewController: UIViewController, ARSessionDelegate {
 
         if state == NeckStates.lookDown {
             let currentPitch = Float(round(1000*(faceAnchor.transform.eulerAnglez.x))/1000)
-            if currentPitch > 0.25 {
+            if currentPitch > 0.4 {
                 arView.scene.removeAnchor(lookDownAnchor)
                 tiltLeftAnchor = try! NeckStretch.loadTiltLeft()
                 arView.scene.anchors.append(tiltLeftAnchor)
@@ -146,7 +147,7 @@ class ViewController: UIViewController, ARSessionDelegate {
         if state == NeckStates.tiltLeft {
             let currentRoll = -Float(round(1000*(faceAnchor.transform.eulerAnglez.z))/1000)
 
-            if currentRoll < -0.25 {
+            if currentRoll < -0.4 {
                 arView.scene.removeAnchor(tiltLeftAnchor)
                 tiltRightAnchor = try! NeckStretch.loadTiltRight()
                 arView.scene.anchors.append(tiltRightAnchor)
@@ -157,7 +158,7 @@ class ViewController: UIViewController, ARSessionDelegate {
         if state == NeckStates.tiltRight {
             let currentRoll = -Float(round(1000*(faceAnchor.transform.eulerAnglez.z))/1000)
 
-            if currentRoll > 0.25 {
+            if currentRoll > 0.4 {
                 arView.scene.removeAnchor(tiltRightAnchor)
                 chinTuckAnchor = try! NeckStretch.loadChinTuck()
                 arView.scene.anchors.append(chinTuckAnchor)
@@ -213,7 +214,6 @@ class ViewController: UIViewController, ARSessionDelegate {
     
     func addCompleteAnchor() {
         let randomInt = Int.random(in: 1...3)
-        print(randomInt)
         
         if randomInt == 1 {
             complete1Anchor = try! NeckStretch.loadComplete1()
