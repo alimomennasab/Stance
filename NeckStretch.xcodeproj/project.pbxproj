@@ -13,6 +13,8 @@
 		9524733626452A9A0037B81D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9524733426452A9A0037B81D /* Main.storyboard */; };
 		9524733826452A9B0037B81D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9524733726452A9B0037B81D /* Assets.xcassets */; };
 		9524733B26452A9B0037B81D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9524733926452A9B0037B81D /* LaunchScreen.storyboard */; };
+		9551328E2669A769002EEA00 /* NoTrueDepthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9551328D2669A769002EEA00 /* NoTrueDepthVC.swift */; };
+		95F3B7FA26699C060004F3AF /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F3B7F926699C060004F3AF /* Enums.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		9524733726452A9B0037B81D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9524733A26452A9B0037B81D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9524733C26452A9B0037B81D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9551328D2669A769002EEA00 /* NoTrueDepthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTrueDepthVC.swift; sourceTree = "<group>"; };
+		95F3B7F926699C060004F3AF /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,14 +61,40 @@
 			isa = PBXGroup;
 			children = (
 				9524732E26452A9A0037B81D /* AppDelegate.swift */,
-				9524733026452A9A0037B81D /* ViewController.swift */,
-				9524733226452A9A0037B81D /* NeckStretch.rcproject */,
-				9524733426452A9A0037B81D /* Main.storyboard */,
+				955132842669A6E6002EEA00 /* Model */,
+				955132862669A6EE002EEA00 /* ViewController */,
+				955132872669A6F8002EEA00 /* View */,
 				9524733726452A9B0037B81D /* Assets.xcassets */,
-				9524733926452A9B0037B81D /* LaunchScreen.storyboard */,
 				9524733C26452A9B0037B81D /* Info.plist */,
 			);
 			path = NeckStretch;
+			sourceTree = "<group>";
+		};
+		955132842669A6E6002EEA00 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				95F3B7F926699C060004F3AF /* Enums.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		955132862669A6EE002EEA00 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				9524733026452A9A0037B81D /* ViewController.swift */,
+				9551328D2669A769002EEA00 /* NoTrueDepthVC.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		955132872669A6F8002EEA00 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9524733426452A9A0037B81D /* Main.storyboard */,
+				9524733226452A9A0037B81D /* NeckStretch.rcproject */,
+				9524733926452A9B0037B81D /* LaunchScreen.storyboard */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,6 +169,8 @@
 			files = (
 				9524733126452A9A0037B81D /* ViewController.swift in Sources */,
 				9524732F26452A9A0037B81D /* AppDelegate.swift in Sources */,
+				9551328E2669A769002EEA00 /* NoTrueDepthVC.swift in Sources */,
+				95F3B7FA26699C060004F3AF /* Enums.swift in Sources */,
 				9524733326452A9A0037B81D /* NeckStretch.rcproject in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

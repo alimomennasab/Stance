@@ -39,14 +39,25 @@ class ViewController: UIViewController, ARSessionDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        arView.session.run(config)
-        arView.session.delegate = self
-        
-        startAnchor = try! NeckStretch.loadStart()
-        
-        arView.scene.anchors.append(startAnchor)
+    
+        // start ar view
+        if ARFaceTrackingConfiguration.isSupported == true {
+            arView.session.run(config)
+            arView.session.delegate = self
+            
+            startAnchor = try! NeckStretch.loadStart()
+            arView.scene.anchors.append(startAnchor)
+        }
                 
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        // go to 'noTrueDepth' VC if not available
+        if ARFaceTrackingConfiguration.isSupported == false {
+            performSegue(withIdentifier: Segues.showNoTrueDepth, sender: self)
+        }
+        
     }
     
     enum CompleteAnchors {
