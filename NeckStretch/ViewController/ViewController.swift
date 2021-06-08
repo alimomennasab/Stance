@@ -60,6 +60,10 @@ class ViewController: UIViewController, ARSessionDelegate {
         
     }
     
+    override var prefersStatusBarHidden: Bool {
+      return true
+    }
+    
     enum CompleteAnchors {
         static let complete1Anchor = "complete1Anchor"
         static let complete2Anchor = "complete2Anchor"
@@ -255,7 +259,7 @@ class ViewController: UIViewController, ARSessionDelegate {
         let yaw = Float(round(1000*(faceAnchor.transform.eulerAnglez.y))/1000)
         
         let roll = -Float(round(1000*(faceAnchor.transform.eulerAnglez.z))/1000)
-                
+                        
         tuckLabel.text = "Tuck: \(tuck)"
                 
         pitchLabel.text = "Pitch: \(pitch) "
