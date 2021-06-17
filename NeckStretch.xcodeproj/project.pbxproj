@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		733D36055806F05B252CBB06 /* Pods_NeckStretch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6073791A4664129EC85D9BD6 /* Pods_NeckStretch.framework */; };
 		9524732F26452A9A0037B81D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9524732E26452A9A0037B81D /* AppDelegate.swift */; };
 		9524733126452A9A0037B81D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9524733026452A9A0037B81D /* ViewController.swift */; };
 		9524733326452A9A0037B81D /* NeckStretch.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = 9524733226452A9A0037B81D /* NeckStretch.rcproject */; };
@@ -14,10 +15,14 @@
 		9524733826452A9B0037B81D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9524733726452A9B0037B81D /* Assets.xcassets */; };
 		9524733B26452A9B0037B81D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9524733926452A9B0037B81D /* LaunchScreen.storyboard */; };
 		9551328E2669A769002EEA00 /* NoTrueDepthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9551328D2669A769002EEA00 /* NoTrueDepthVC.swift */; };
+		95796435267AD07E00D68660 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95796434267AD07E00D68660 /* GoogleService-Info.plist */; };
 		95F3B7FA26699C060004F3AF /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F3B7F926699C060004F3AF /* Enums.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0498863AE8FE227768F59D8B /* Pods-NeckStretch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeckStretch.debug.xcconfig"; path = "Target Support Files/Pods-NeckStretch/Pods-NeckStretch.debug.xcconfig"; sourceTree = "<group>"; };
+		6073791A4664129EC85D9BD6 /* Pods_NeckStretch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NeckStretch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		66350CA7ECB83E350998DD82 /* Pods-NeckStretch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeckStretch.release.xcconfig"; path = "Target Support Files/Pods-NeckStretch/Pods-NeckStretch.release.xcconfig"; sourceTree = "<group>"; };
 		9524732B26452A9A0037B81D /* NeckStretch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NeckStretch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9524732E26452A9A0037B81D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9524733026452A9A0037B81D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -27,6 +32,7 @@
 		9524733A26452A9B0037B81D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9524733C26452A9B0037B81D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9551328D2669A769002EEA00 /* NoTrueDepthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTrueDepthVC.swift; sourceTree = "<group>"; };
+		95796434267AD07E00D68660 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		95F3B7F926699C060004F3AF /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -35,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				733D36055806F05B252CBB06 /* Pods_NeckStretch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +53,8 @@
 			children = (
 				9524732D26452A9A0037B81D /* NeckStretch */,
 				9524732C26452A9A0037B81D /* Products */,
+				DC6DAA89CDBFA3717A304172 /* Pods */,
+				DEB5E39D4D21D916FB392162 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +75,7 @@
 				955132872669A6F8002EEA00 /* View */,
 				9524733726452A9B0037B81D /* Assets.xcassets */,
 				9524733C26452A9B0037B81D /* Info.plist */,
+				95796434267AD07E00D68660 /* GoogleService-Info.plist */,
 			);
 			path = NeckStretch;
 			sourceTree = "<group>";
@@ -97,6 +107,23 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		DC6DAA89CDBFA3717A304172 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0498863AE8FE227768F59D8B /* Pods-NeckStretch.debug.xcconfig */,
+				66350CA7ECB83E350998DD82 /* Pods-NeckStretch.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		DEB5E39D4D21D916FB392162 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6073791A4664129EC85D9BD6 /* Pods_NeckStretch.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -104,9 +131,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9524733F26452A9B0037B81D /* Build configuration list for PBXNativeTarget "NeckStretch" */;
 			buildPhases = (
+				AB3A8DAA78F078E14BC0AA4A /* [CP] Check Pods Manifest.lock */,
 				9524732726452A9A0037B81D /* Sources */,
 				9524732826452A9A0037B81D /* Frameworks */,
 				9524732926452A9A0037B81D /* Resources */,
+				B2D880BFEABCF632AB6E8EF0 /* [CP] Embed Pods Frameworks */,
+				95D0C9A5267AC39B009B281E /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -155,12 +185,72 @@
 			buildActionMask = 2147483647;
 			files = (
 				9524733B26452A9B0037B81D /* LaunchScreen.storyboard in Resources */,
+				95796435267AD07E00D68660 /* GoogleService-Info.plist in Resources */,
 				9524733826452A9B0037B81D /* Assets.xcassets in Resources */,
 				9524733626452A9A0037B81D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		95D0C9A5267AC39B009B281E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
+		AB3A8DAA78F078E14BC0AA4A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NeckStretch-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B2D880BFEABCF632AB6E8EF0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NeckStretch/Pods-NeckStretch-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NeckStretch/Pods-NeckStretch-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NeckStretch/Pods-NeckStretch-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9524732726452A9A0037B81D /* Sources */ = {
@@ -315,11 +405,13 @@
 		};
 		9524734026452A9B0037B81D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0498863AE8FE227768F59D8B /* Pods-NeckStretch.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 7;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = T4CL79J5Y8;
 				INFOPLIST_FILE = NeckStretch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -336,6 +428,7 @@
 		};
 		9524734126452A9B0037B81D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 66350CA7ECB83E350998DD82 /* Pods-NeckStretch.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

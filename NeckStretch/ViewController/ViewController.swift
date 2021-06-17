@@ -48,7 +48,6 @@ class ViewController: UIViewController, ARSessionDelegate {
             startAnchor = try! NeckStretch.loadStart()
             arView.scene.anchors.append(startAnchor)
         }
-                
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,6 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // set up firebase
+        FirebaseApp.configure()
+        Analytics.setAnalyticsCollectionEnabled(true)
         
         // When set to true, this means the screen will never dim or go to sleep while your app is running
         UIApplication.shared.isIdleTimerDisabled = true
