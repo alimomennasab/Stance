@@ -14,6 +14,7 @@
 		9524733626452A9A0037B81D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9524733426452A9A0037B81D /* Main.storyboard */; };
 		9524733826452A9B0037B81D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9524733726452A9B0037B81D /* Assets.xcassets */; };
 		9524733B26452A9B0037B81D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9524733926452A9B0037B81D /* LaunchScreen.storyboard */; };
+		952BDD54267D52D3005C1D35 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952BDD53267D52D3005C1D35 /* Notifications.swift */; };
 		9551328E2669A769002EEA00 /* NoTrueDepthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9551328D2669A769002EEA00 /* NoTrueDepthVC.swift */; };
 		95796435267AD07E00D68660 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95796434267AD07E00D68660 /* GoogleService-Info.plist */; };
 		95F3B7FA26699C060004F3AF /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95F3B7F926699C060004F3AF /* Enums.swift */; };
@@ -31,6 +32,7 @@
 		9524733726452A9B0037B81D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9524733A26452A9B0037B81D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9524733C26452A9B0037B81D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		952BDD53267D52D3005C1D35 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		9551328D2669A769002EEA00 /* NoTrueDepthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTrueDepthVC.swift; sourceTree = "<group>"; };
 		95796434267AD07E00D68660 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		95F3B7F926699C060004F3AF /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				95F3B7F926699C060004F3AF /* Enums.swift */,
+				952BDD53267D52D3005C1D35 /* Notifications.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				952BDD54267D52D3005C1D35 /* Notifications.swift in Sources */,
 				9524733126452A9A0037B81D /* ViewController.swift in Sources */,
 				9524732F26452A9A0037B81D /* AppDelegate.swift in Sources */,
 				9551328E2669A769002EEA00 /* NoTrueDepthVC.swift in Sources */,

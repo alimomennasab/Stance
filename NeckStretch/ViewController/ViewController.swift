@@ -202,6 +202,13 @@ class ViewController: UIViewController, ARSessionDelegate {
                 arView.scene.anchors.append(startAnchor)
                 state = NeckStates.start
                 
+                // request for notifications
+                let localNotifications = LocalNotifications()
+                localNotifications.requestLocalNotifications()
+                
+                // remove notification badge after complete
+                UIApplication.shared.applicationIconBadgeNumber = 0
+                
                 Analytics.logEvent("stretch_complete", parameters: nil)
             }
         }
