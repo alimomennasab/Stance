@@ -5,6 +5,7 @@
 //  Created by xavier chia on 7/5/21.
 //
 
+import Firebase
 import UIKit
 import RealityKit
 import ARKit
@@ -200,6 +201,8 @@ class ViewController: UIViewController, ARSessionDelegate {
                 startAnchor = try! NeckStretch.loadStart()
                 arView.scene.anchors.append(startAnchor)
                 state = NeckStates.start
+                
+                Analytics.logEvent("stretch_complete", parameters: nil)
             }
         }
         
