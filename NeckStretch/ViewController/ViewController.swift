@@ -6,9 +6,11 @@
 //
 
 import Firebase
+
 import UIKit
 import RealityKit
 import ARKit
+import AVFoundation
 
 class ViewController: UIViewController, ARSessionDelegate {
     
@@ -30,17 +32,19 @@ class ViewController: UIViewController, ARSessionDelegate {
     var state = NeckStates.start
     var initialTuck: Float = 0
     var completeAnchor = ""
-
+    var sounds = Sounds()
+    
     @IBOutlet weak var pitchLabel: UILabel!
     @IBOutlet weak var yawLabel: UILabel!
     @IBOutlet weak var rollLabel: UILabel!
     @IBOutlet weak var tuckLabel: UILabel!
     
+    
     let config = ARFaceTrackingConfiguration()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-    
+        
         // start ar view
         if ARFaceTrackingConfiguration.isSupported == true {
             arView.session.run(config)
@@ -48,6 +52,9 @@ class ViewController: UIViewController, ARSessionDelegate {
             
             startAnchor = try! NeckStretch.loadStart()
             arView.scene.anchors.append(startAnchor)
+            
+            sounds.playStart()
+            
         }
     }
     
@@ -61,7 +68,7 @@ class ViewController: UIViewController, ARSessionDelegate {
     }
     
     override var prefersStatusBarHidden: Bool {
-      return true
+        return true
     }
     
     enum CompleteAnchors {
@@ -114,6 +121,8 @@ class ViewController: UIViewController, ARSessionDelegate {
                 initialBufferAnchor.actions.bufferComplete.onAction = bufferToFaceLeft(_:)
                 arView.scene.anchors.append(initialBufferAnchor)
                 state = NeckStates.initialBuffer
+                
+                sounds.turnLeft()
             }
         }
         
@@ -121,21 +130,25 @@ class ViewController: UIViewController, ARSessionDelegate {
             let currentYaw = Float(round(1000*(faceAnchor.transform.eulerAnglez.y))/1000)
             
             if currentYaw < -0.4 {
-                    arView.scene.removeAnchor(faceLeftAnchor)
-                    faceRightAnchor = try! NeckStretch.loadFaceRight()
-                    arView.scene.anchors.append(faceRightAnchor)
-                    state = NeckStates.faceRight
-                }
+                arView.scene.removeAnchor(faceLeftAnchor)
+                faceRightAnchor = try! NeckStretch.loadFaceRight()
+                arView.scene.anchors.append(faceRightAnchor)
+                state = NeckStates.faceRight
+                
+                sounds.turnRight()
+            }
         }
         
         if state == NeckStates.faceRight {
             let currentYaw = Float(round(1000*(faceAnchor.transform.eulerAnglez.y))/1000)
-
+            
             if currentYaw > 0.4 {
                 arView.scene.removeAnchor(faceRightAnchor)
                 lookUpAnchor = try! NeckStretch.loadLookUp()
                 arView.scene.anchors.append(lookUpAnchor)
                 state = NeckStates.lookUp
+                
+                sounds.lookUp()
             }
         }
         
@@ -146,9 +159,11 @@ class ViewController: UIViewController, ARSessionDelegate {
                 lookDownAnchor = try! NeckStretch.loadLookDown()
                 arView.scene.anchors.append(lookDownAnchor)
                 state = NeckStates.lookDown
+                
+                sounds.lookDown()
             }
         }
-
+        
         if state == NeckStates.lookDown {
             let currentPitch = Float(round(1000*(faceAnchor.transform.eulerAnglez.x))/1000)
             if currentPitch > 0.4 {
@@ -156,38 +171,46 @@ class ViewController: UIViewController, ARSessionDelegate {
                 tiltLeftAnchor = try! NeckStretch.loadTiltLeft()
                 arView.scene.anchors.append(tiltLeftAnchor)
                 state = NeckStates.tiltLeft
+                
+                sounds.tiltLeft()
             }
         }
         
         if state == NeckStates.tiltLeft {
             let currentRoll = -Float(round(1000*(faceAnchor.transform.eulerAnglez.z))/1000)
-
+            
             if currentRoll < -0.4 {
                 arView.scene.removeAnchor(tiltLeftAnchor)
                 tiltRightAnchor = try! NeckStretch.loadTiltRight()
                 arView.scene.anchors.append(tiltRightAnchor)
                 state = NeckStates.tiltRight
+                
+                sounds.tiltRight()
             }
         }
         
         if state == NeckStates.tiltRight {
             let currentRoll = -Float(round(1000*(faceAnchor.transform.eulerAnglez.z))/1000)
-
+            
             if currentRoll > 0.4 {
                 arView.scene.removeAnchor(tiltRightAnchor)
                 chinTuckAnchor = try! NeckStretch.loadChinTuck()
                 arView.scene.anchors.append(chinTuckAnchor)
                 state = NeckStates.chinTuck
                 initialTuck = faceAnchor.transform.columns.3[2]
+                
+                sounds.chinTuck()
             }
         }
-                
+        
         if state == NeckStates.chinTuck {
             let currentTuck = faceAnchor.transform.columns.3[2]
             if -initialTuck + currentTuck < -0.02 {
                 arView.scene.removeAnchor(chinTuckAnchor)
                 addCompleteAnchor()
                 state = NeckStates.complete
+                
+                sounds.smile()
             }
         }
         
@@ -195,12 +218,14 @@ class ViewController: UIViewController, ARSessionDelegate {
             let blendShapes = faceAnchor.blendShapes
             guard let mouthSmileLeft = blendShapes[.mouthSmileLeft],
                   let mouthSmileRight = blendShapes[.mouthSmileRight] else { return }
-
+            
             if (Double(truncating: mouthSmileLeft) > 0.5 && Double(truncating: mouthSmileRight) > 0.5) {
                 removeCompleteAnchor()
                 startAnchor = try! NeckStretch.loadStart()
                 arView.scene.anchors.append(startAnchor)
                 state = NeckStates.start
+                
+                sounds.playStart()
                 
                 // request for notifications
                 let localNotifications = LocalNotifications()
@@ -256,7 +281,7 @@ class ViewController: UIViewController, ARSessionDelegate {
             arView.scene.anchors.append(complete3Anchor)
             completeAnchor = CompleteAnchors.complete3Anchor
         }
-
+        
     }
     
     func updateLabels(faceAnchor: ARFaceAnchor) {
@@ -268,9 +293,9 @@ class ViewController: UIViewController, ARSessionDelegate {
         let yaw = Float(round(1000*(faceAnchor.transform.eulerAnglez.y))/1000)
         
         let roll = -Float(round(1000*(faceAnchor.transform.eulerAnglez.z))/1000)
-                        
+        
         tuckLabel.text = "Tuck: \(tuck)"
-                
+        
         pitchLabel.text = "Pitch: \(pitch) "
         
         yawLabel.text = "Yaw: \(yaw)"

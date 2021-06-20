@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import AVFoundation
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +24,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // When set to true, this means the screen will never dim or go to sleep while your app is running
         UIApplication.shared.isIdleTimerDisabled = true
+        
+        // plays audio in silent mode
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback)
+        } catch {
+          print(error)
+        }
 
         return true
     }
