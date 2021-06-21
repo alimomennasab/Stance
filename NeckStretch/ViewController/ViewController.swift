@@ -35,7 +35,7 @@ class ViewController: UIViewController, ARSessionDelegate {
     var completeAnchor = ""
     var sounds = Sounds()
     let hapticGenerator = UINotificationFeedbackGenerator()
-
+    
     
     @IBOutlet weak var pitchLabel: UILabel!
     @IBOutlet weak var yawLabel: UILabel!
@@ -57,7 +57,7 @@ class ViewController: UIViewController, ARSessionDelegate {
             startAnchor = try! NeckStretch.loadStart()
             arView.scene.anchors.append(startAnchor)
             
-            sounds.playStart()
+            sounds.playSound(name: NeckStates.start)
             
             countLabel.isHidden = true
         }
@@ -107,12 +107,12 @@ class ViewController: UIViewController, ARSessionDelegate {
                 arView.scene.anchors.append(initialBufferAnchor)
                 state = NeckStates.initialBuffer
                 
-                sounds.turnLeft()
+                sounds.playSound(name: NeckStates.turnLeft)
                 hapticGenerator.notificationOccurred(.success)
             }
         }
         
-        if state == NeckStates.faceLeft && inDelay == false {
+        if state == NeckStates.turnLeft && inDelay == false {
             let currentYaw = Float(round(1000*(faceAnchor.transform.eulerAnglez.y))/1000)
             
             if currentYaw < -0.4 {
@@ -121,18 +121,18 @@ class ViewController: UIViewController, ARSessionDelegate {
                     self.arView.scene.removeAnchor(self.faceLeftAnchor)
                     self.faceRightAnchor = try! NeckStretch.loadFaceRight()
                     self.arView.scene.anchors.append(self.faceRightAnchor)
-                    self.state = NeckStates.faceRight
+                    self.state = NeckStates.turnRight
                     
-                    self.sounds.turnRight()
+                    self.sounds.playSound(name: NeckStates.turnRight)
                     self.hapticGenerator.notificationOccurred(.success)
                     self.inDelay = false
                     
                 }
-
+                
             }
         }
         
-        if state == NeckStates.faceRight && inDelay == false {
+        if state == NeckStates.turnRight && inDelay == false {
             let currentYaw = Float(round(1000*(faceAnchor.transform.eulerAnglez.y))/1000)
             
             if currentYaw > 0.4 {
@@ -143,7 +143,7 @@ class ViewController: UIViewController, ARSessionDelegate {
                     self.arView.scene.anchors.append(self.lookUpAnchor)
                     self.state = NeckStates.lookUp
                     
-                    self.sounds.lookUp()
+                    self.sounds.playSound(name: NeckStates.lookUp)
                     self.hapticGenerator.notificationOccurred(.success)
                     self.inDelay = false
                 }
@@ -161,7 +161,7 @@ class ViewController: UIViewController, ARSessionDelegate {
                     self.arView.scene.anchors.append(self.lookDownAnchor)
                     self.state = NeckStates.lookDown
                     
-                    self.sounds.lookDown()
+                    self.sounds.playSound(name: NeckStates.lookDown)
                     self.hapticGenerator.notificationOccurred(.success)
                     self.inDelay = false
                 }
@@ -180,7 +180,7 @@ class ViewController: UIViewController, ARSessionDelegate {
                     self.arView.scene.anchors.append(self.tiltLeftAnchor)
                     self.state = NeckStates.tiltLeft
                     
-                    self.sounds.tiltLeft()
+                    self.sounds.playSound(name: NeckStates.tiltLeft)
                     self.hapticGenerator.notificationOccurred(.success)
                     self.inDelay = false
                 }
@@ -199,7 +199,7 @@ class ViewController: UIViewController, ARSessionDelegate {
                     self.arView.scene.anchors.append(self.tiltRightAnchor)
                     self.state = NeckStates.tiltRight
                     
-                    self.sounds.tiltRight()
+                    self.sounds.playSound(name: NeckStates.tiltRight)
                     self.hapticGenerator.notificationOccurred(.success)
                     self.inDelay = false
                 }
@@ -213,14 +213,14 @@ class ViewController: UIViewController, ARSessionDelegate {
                 inDelay = true
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + Times.delay) {
-
+                    
                     self.arView.scene.removeAnchor(self.tiltRightAnchor)
                     self.chinTuckAnchor = try! NeckStretch.loadChinTuck()
                     self.arView.scene.anchors.append(self.chinTuckAnchor)
                     self.state = NeckStates.chinTuck
                     self.initialTuck = faceAnchor.transform.columns.3[2]
                     
-                    self.sounds.chinTuck()
+                    self.sounds.playSound(name: NeckStates.chinTuck)
                     self.hapticGenerator.notificationOccurred(.success)
                     self.inDelay = false
                 }
@@ -235,16 +235,16 @@ class ViewController: UIViewController, ARSessionDelegate {
                 DispatchQueue.main.asyncAfter(deadline: .now() + Times.delay) {
                     self.arView.scene.removeAnchor(self.chinTuckAnchor)
                     self.addCompleteAnchor()
-                    self.state = NeckStates.complete
+                    self.state = NeckStates.smile
                     
-                    self.sounds.smile()
+                    self.sounds.playSound(name: NeckStates.smile)
                     self.hapticGenerator.notificationOccurred(.success)
                     self.inDelay = false
                 }
             }
         }
         
-        if state == NeckStates.complete {
+        if state == NeckStates.smile {
             let blendShapes = faceAnchor.blendShapes
             guard let mouthSmileLeft = blendShapes[.mouthSmileLeft],
                   let mouthSmileRight = blendShapes[.mouthSmileRight] else { return }
@@ -253,39 +253,43 @@ class ViewController: UIViewController, ARSessionDelegate {
                 
                 inDelay = true
                 
-                countLabel.isHidden = false
-                var runCount = Int(Times.smileHold)
-                countLabel.text = String(runCount)
-
-                Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-                    runCount -= 1
+                DispatchQueue.main.asyncAfter(deadline: .now() + Times.delay) {
+                    
+                    var runCount = Int(Times.smileHold)
+                    
+                    self.countLabel.isHidden = false
                     self.countLabel.text = String(runCount)
-
-                    if runCount == 0 {
-                        timer.invalidate()
-                        self.countLabel.text = ""
-                        self.countLabel.isHidden = true
+                    self.sounds.playNumber(number: runCount)
+                    
+                    Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+                        runCount -= 1
+                        self.countLabel.text = String(runCount)
+                        self.sounds.playNumber(number: runCount)
+                        
+                        if runCount == 0 {
+                            timer.invalidate()
+                            self.countLabel.text = ""
+                            self.countLabel.isHidden = true
+                            
+                            self.removeCompleteAnchor()
+                            self.startAnchor = try! NeckStretch.loadStart()
+                            self.arView.scene.anchors.append(self.startAnchor)
+                            self.state = NeckStates.start
+                            
+                            self.sounds.playSound(name: NeckStates.start)
+                            self.hapticGenerator.notificationOccurred(.success)
+                            self.inDelay = false
+                            
+                            // request for notifications
+                            let localNotifications = LocalNotifications()
+                            localNotifications.requestLocalNotifications()
+                            
+                            // remove notification badge after complete
+                            UIApplication.shared.applicationIconBadgeNumber = 0
+                            
+                            Analytics.logEvent("stretch_complete", parameters: nil)
+                        }
                     }
-                }
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + Times.smileHold) {
-                    self.removeCompleteAnchor()
-                    self.startAnchor = try! NeckStretch.loadStart()
-                    self.arView.scene.anchors.append(self.startAnchor)
-                    self.state = NeckStates.start
-                    
-                    self.sounds.playStart()
-                    self.hapticGenerator.notificationOccurred(.success)
-                    self.inDelay = false
-                    
-                    // request for notifications
-                    let localNotifications = LocalNotifications()
-                    localNotifications.requestLocalNotifications()
-                    
-                    // remove notification badge after complete
-                    UIApplication.shared.applicationIconBadgeNumber = 0
-                    
-                    Analytics.logEvent("stretch_complete", parameters: nil)
                 }
             }
         }
@@ -296,7 +300,7 @@ class ViewController: UIViewController, ARSessionDelegate {
         arView.scene.removeAnchor(initialBufferAnchor)
         faceLeftAnchor = try! NeckStretch.loadFaceLeft()
         arView.scene.anchors.append(faceLeftAnchor)
-        state = NeckStates.faceLeft
+        state = NeckStates.turnLeft
     }
     
     func removeCompleteAnchor() {

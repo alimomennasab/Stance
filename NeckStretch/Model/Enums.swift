@@ -24,14 +24,14 @@ enum CompleteAnchors {
 enum NeckStates {
     static let start = "start"
     static let initialBuffer = "initialBuffer"
-    static let faceLeft = "faceLeft"
-    static let faceRight = "faceRight"
+    static let turnLeft = "turnLeft"
+    static let turnRight = "turnRight"
     static let lookUp = "lookUp"
     static let lookDown = "lookDown"
     static let tiltLeft = "tiltLeft"
     static let tiltRight = "tiltRight"
     static let chinTuck = "chinTuck"
-    static let complete = "complete"
+    static let smile = "smile"
 }
 
 enum Times {
