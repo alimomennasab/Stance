@@ -15,20 +15,8 @@ import AVFoundation
 class ViewController: UIViewController, ARSessionDelegate {
     
     @IBOutlet weak var arView: ARView!
-    var startAnchor: NeckStretch.Start!
-    var initialBufferAnchor: NeckStretch.InitialBuffer!
-    var faceLeftAnchor: NeckStretch.FaceLeft!
-    var faceRightAnchor: NeckStretch.FaceRight!
-    var lookUpAnchor: NeckStretch.LookUp!
-    var lookDownAnchor: NeckStretch.LookDown!
-    var tiltLeftAnchor: NeckStretch.TiltLeft!
-    var tiltRightAnchor: NeckStretch.TiltRight!
-    var chinTuckAnchor: NeckStretch.ChinTuck!
     
-    var complete1Anchor: NeckStretch.Complete1!
-    var complete2Anchor: NeckStretch.Complete2!
-    var complete3Anchor: NeckStretch.Complete3!
-    
+    var anchors = Anchors()
     var state = NeckStates.start
     var inDelay = false
     var initialTuck: Float = 0
@@ -36,13 +24,11 @@ class ViewController: UIViewController, ARSessionDelegate {
     var sounds = Sounds()
     let hapticGenerator = UINotificationFeedbackGenerator()
     
-    
     @IBOutlet weak var pitchLabel: UILabel!
     @IBOutlet weak var yawLabel: UILabel!
     @IBOutlet weak var rollLabel: UILabel!
     @IBOutlet weak var tuckLabel: UILabel!
     @IBOutlet weak var countLabel: UILabel!
-    
     
     let config = ARFaceTrackingConfiguration()
     
@@ -54,11 +40,8 @@ class ViewController: UIViewController, ARSessionDelegate {
             arView.session.run(config)
             arView.session.delegate = self
             
-            startAnchor = try! NeckStretch.loadStart()
-            arView.scene.anchors.append(startAnchor)
-            
+            arView.scene.anchors.append(anchors.getStartAnchor())
             sounds.playSound(name: NeckStates.start)
-            
             countLabel.isHidden = true
         }
     }
@@ -78,7 +61,6 @@ class ViewController: UIViewController, ARSessionDelegate {
     
     func session(_ session: ARSession, didUpdate anchors: [ARAnchor]) {
         
-        
         var faceAnchor: ARFaceAnchor!
         
         for i in anchors {
@@ -96,16 +78,20 @@ class ViewController: UIViewController, ARSessionDelegate {
             
             if (Double(truncating: leftEyeValue) > 0.5 && Double(truncating: rightEyeValue) < 0.5) ||
                 (Double(truncating: leftEyeValue) < 0.5 && Double(truncating: rightEyeValue) > 0.5) {
-                arView.scene.removeAnchor(startAnchor)
+                arView.scene.removeAnchor(self.anchors.startAnchor)
                 
                 // reset tracking is needed in case user was facing camera at a weird angle when opening the app
                 arView.session.run(config, options: [.resetTracking, .removeExistingAnchors])
                 
                 // initial buffer is needed as yaw can be an erratic number like -0.3 when tracking is reset, this causes faceLeft scene to be skipped
-                initialBufferAnchor = try! NeckStretch.loadInitialBuffer()
-                initialBufferAnchor.actions.bufferComplete.onAction = bufferToFaceLeft(_:)
-                arView.scene.anchors.append(initialBufferAnchor)
+                arView.scene.anchors.append(self.anchors.getInitialBufferAnchor())
                 state = NeckStates.initialBuffer
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + Times.delay) {
+                    self.arView.scene.removeAnchor(self.anchors.initialBufferAnchor)
+                    self.arView.scene.anchors.append(self.anchors.getFaceLeftAnchor())
+                    self.state = NeckStates.turnLeft
+                }
                 
                 sounds.playSound(name: NeckStates.turnLeft)
                 hapticGenerator.notificationOccurred(.success)
@@ -118,9 +104,8 @@ class ViewController: UIViewController, ARSessionDelegate {
             if currentYaw < -0.4 {
                 inDelay = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + Times.delay) {
-                    self.arView.scene.removeAnchor(self.faceLeftAnchor)
-                    self.faceRightAnchor = try! NeckStretch.loadFaceRight()
-                    self.arView.scene.anchors.append(self.faceRightAnchor)
+                    self.arView.scene.removeAnchor(self.anchors.faceLeftAnchor)
+                    self.arView.scene.anchors.append(self.anchors.getFaceRightAnchor())
                     self.state = NeckStates.turnRight
                     
                     self.sounds.playSound(name: NeckStates.turnRight)
@@ -138,9 +123,8 @@ class ViewController: UIViewController, ARSessionDelegate {
             if currentYaw > 0.4 {
                 inDelay = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + Times.delay) {
-                    self.arView.scene.removeAnchor(self.faceRightAnchor)
-                    self.lookUpAnchor = try! NeckStretch.loadLookUp()
-                    self.arView.scene.anchors.append(self.lookUpAnchor)
+                    self.arView.scene.removeAnchor(self.anchors.faceRightAnchor)
+                    self.arView.scene.anchors.append(self.anchors.getLookUpAnchor())
                     self.state = NeckStates.lookUp
                     
                     self.sounds.playSound(name: NeckStates.lookUp)
@@ -156,9 +140,8 @@ class ViewController: UIViewController, ARSessionDelegate {
             if currentPitch < -0.4 {
                 inDelay = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + Times.delay) {
-                    self.arView.scene.removeAnchor(self.lookUpAnchor)
-                    self.lookDownAnchor = try! NeckStretch.loadLookDown()
-                    self.arView.scene.anchors.append(self.lookDownAnchor)
+                    self.arView.scene.removeAnchor(self.anchors.lookUpAnchor)
+                    self.arView.scene.anchors.append(self.anchors.getLookDownAnchor())
                     self.state = NeckStates.lookDown
                     
                     self.sounds.playSound(name: NeckStates.lookDown)
@@ -175,9 +158,8 @@ class ViewController: UIViewController, ARSessionDelegate {
                 inDelay = true
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + Times.delay) {
-                    self.arView.scene.removeAnchor(self.lookDownAnchor)
-                    self.tiltLeftAnchor = try! NeckStretch.loadTiltLeft()
-                    self.arView.scene.anchors.append(self.tiltLeftAnchor)
+                    self.arView.scene.removeAnchor(self.anchors.lookDownAnchor)
+                    self.arView.scene.anchors.append(self.anchors.getTiltLeftAnchor())
                     self.state = NeckStates.tiltLeft
                     
                     self.sounds.playSound(name: NeckStates.tiltLeft)
@@ -194,9 +176,8 @@ class ViewController: UIViewController, ARSessionDelegate {
                 inDelay = true
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + Times.delay) {
-                    self.arView.scene.removeAnchor(self.tiltLeftAnchor)
-                    self.tiltRightAnchor = try! NeckStretch.loadTiltRight()
-                    self.arView.scene.anchors.append(self.tiltRightAnchor)
+                    self.arView.scene.removeAnchor(self.anchors.tiltLeftAnchor)
+                    self.arView.scene.anchors.append(self.anchors.getTiltRightAnchor())
                     self.state = NeckStates.tiltRight
                     
                     self.sounds.playSound(name: NeckStates.tiltRight)
@@ -214,9 +195,8 @@ class ViewController: UIViewController, ARSessionDelegate {
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + Times.delay) {
                     
-                    self.arView.scene.removeAnchor(self.tiltRightAnchor)
-                    self.chinTuckAnchor = try! NeckStretch.loadChinTuck()
-                    self.arView.scene.anchors.append(self.chinTuckAnchor)
+                    self.arView.scene.removeAnchor(self.anchors.tiltRightAnchor)
+                    self.arView.scene.anchors.append(self.anchors.getChinTuckAnchor())
                     self.state = NeckStates.chinTuck
                     self.initialTuck = faceAnchor.transform.columns.3[2]
                     
@@ -233,7 +213,7 @@ class ViewController: UIViewController, ARSessionDelegate {
                 inDelay = true
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + Times.delay) {
-                    self.arView.scene.removeAnchor(self.chinTuckAnchor)
+                    self.arView.scene.removeAnchor(self.anchors.chinTuckAnchor)
                     self.addCompleteAnchor()
                     self.state = NeckStates.smile
                     
@@ -272,8 +252,7 @@ class ViewController: UIViewController, ARSessionDelegate {
                             self.countLabel.isHidden = true
                             
                             self.removeCompleteAnchor()
-                            self.startAnchor = try! NeckStretch.loadStart()
-                            self.arView.scene.anchors.append(self.startAnchor)
+                            self.arView.scene.anchors.append(self.anchors.getStartAnchor())
                             self.state = NeckStates.start
                             
                             self.sounds.playSound(name: NeckStates.start)
@@ -296,24 +275,17 @@ class ViewController: UIViewController, ARSessionDelegate {
         
     }
     
-    func bufferToFaceLeft(_ entity: Entity?) {
-        arView.scene.removeAnchor(initialBufferAnchor)
-        faceLeftAnchor = try! NeckStretch.loadFaceLeft()
-        arView.scene.anchors.append(faceLeftAnchor)
-        state = NeckStates.turnLeft
-    }
-    
     func removeCompleteAnchor() {
         if completeAnchor == CompleteAnchors.complete1Anchor {
-            arView.scene.removeAnchor(complete1Anchor)
+            arView.scene.removeAnchor(anchors.complete1Anchor)
         }
         
         else if completeAnchor == CompleteAnchors.complete2Anchor {
-            arView.scene.removeAnchor(complete2Anchor)
+            arView.scene.removeAnchor(anchors.complete2Anchor)
         }
         
         else {
-            arView.scene.removeAnchor(complete3Anchor)
+            arView.scene.removeAnchor(anchors.complete3Anchor)
         }
     }
     
@@ -321,20 +293,17 @@ class ViewController: UIViewController, ARSessionDelegate {
         let randomInt = Int.random(in: 1...3)
         
         if randomInt == 1 {
-            complete1Anchor = try! NeckStretch.loadComplete1()
-            arView.scene.anchors.append(complete1Anchor)
+            arView.scene.anchors.append(anchors.getComplete1Anchor())
             completeAnchor = CompleteAnchors.complete1Anchor
         }
         
         else if randomInt == 2 {
-            complete2Anchor = try! NeckStretch.loadComplete2()
-            arView.scene.anchors.append(complete2Anchor)
+            arView.scene.anchors.append(anchors.getComplete2Anchor())
             completeAnchor = CompleteAnchors.complete2Anchor
         }
         
         else {
-            complete3Anchor = try! NeckStretch.loadComplete3()
-            arView.scene.anchors.append(complete3Anchor)
+            arView.scene.anchors.append(anchors.getComplete3Anchor())
             completeAnchor = CompleteAnchors.complete3Anchor
         }
         
