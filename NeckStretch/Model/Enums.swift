@@ -35,6 +35,7 @@ enum NeckStates {
 }
 
 enum Times {
-    static let delay = 0.5
+    static let shortDelay = 0.2
+    static let delay = 1.0
     static let smileHold = 3.0
 }

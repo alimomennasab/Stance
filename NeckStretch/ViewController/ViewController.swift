@@ -19,6 +19,7 @@ class ViewController: UIViewController, ARSessionDelegate {
     var anchors = Anchors()
     var state = NeckStates.start
     var inDelay = false
+    var numOfRounds = 0
     var initialTuck: Float = 0
     var completeAnchor = ""
     var sounds = Sounds()
@@ -72,6 +73,8 @@ class ViewController: UIViewController, ARSessionDelegate {
         updateLabels(faceAnchor: faceAnchor)
         
         if state == NeckStates.start {
+            numOfRounds = 0
+            
             let blendShapes = faceAnchor.blendShapes
             guard let leftEyeValue = blendShapes[.eyeBlinkLeft],
                   let rightEyeValue = blendShapes[.eyeBlinkRight] else { return }
@@ -87,14 +90,13 @@ class ViewController: UIViewController, ARSessionDelegate {
                 arView.scene.anchors.append(self.anchors.getInitialBufferAnchor())
                 state = NeckStates.initialBuffer
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + Times.delay) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Times.shortDelay) {
                     self.arView.scene.removeAnchor(self.anchors.initialBufferAnchor)
                     self.arView.scene.anchors.append(self.anchors.getFaceLeftAnchor())
                     self.state = NeckStates.turnLeft
+                    self.sounds.playSound(name: NeckStates.turnLeft)
+                    self.hapticGenerator.notificationOccurred(.success)
                 }
-                
-                sounds.playSound(name: NeckStates.turnLeft)
-                hapticGenerator.notificationOccurred(.success)
             }
         }
         
@@ -212,13 +214,26 @@ class ViewController: UIViewController, ARSessionDelegate {
             if -initialTuck + currentTuck < -0.02 {
                 inDelay = true
                 
+                numOfRounds += 1
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + Times.delay) {
-                    self.arView.scene.removeAnchor(self.anchors.chinTuckAnchor)
-                    self.addCompleteAnchor()
-                    self.state = NeckStates.smile
+                    if self.numOfRounds == 2 {
+                        self.arView.scene.removeAnchor(self.anchors.chinTuckAnchor)
+                        self.addCompleteAnchor()
+                        self.state = NeckStates.smile
+                        
+                        self.sounds.playSound(name: NeckStates.smile)
+                        self.hapticGenerator.notificationOccurred(.success)
+                    }
                     
-                    self.sounds.playSound(name: NeckStates.smile)
-                    self.hapticGenerator.notificationOccurred(.success)
+                    else {
+                        self.arView.scene.removeAnchor(self.anchors.chinTuckAnchor)
+                        self.arView.scene.anchors.append(self.anchors.getFaceLeftAnchor())
+                        self.state = NeckStates.turnLeft
+                        self.sounds.playSound(name: NeckStates.turnLeft)
+                        self.hapticGenerator.notificationOccurred(.success)
+                    }
+                    
                     self.inDelay = false
                 }
             }
