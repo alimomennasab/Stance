@@ -1,0 +1,42 @@
+[
+  {
+    "libraryIdentifier" : "12922873d83aee101cd3276d1a782327",
+    "format" : "image",
+    "displayName" : "faceLeft.jpeg"
+  },
+  {
+    "libraryIdentifier" : "9a4d1cb97f83002b2db5ce0423902a86",
+    "format" : "image",
+    "displayName" : "faceRight.jpeg"
+  },
+  {
+    "libraryIdentifier" : "b24d28beddd948fe0b84f8a78ce496d5",
+    "format" : "image",
+    "displayName" : "up.jpeg"
+  },
+  {
+    "libraryIdentifier" : "37b54add60ce1ef43e7fd518722d23a7",
+    "format" : "image",
+    "displayName" : "down.jpeg"
+  },
+  {
+    "libraryIdentifier" : "76a74c1fa0deb1616a0be074d90b5fd4",
+    "format" : "image",
+    "displayName" : "tiltLeft.jpeg"
+  },
+  {
+    "libraryIdentifier" : "e4fe4a58c496457115386d110c27c93e",
+    "format" : "image",
+    "displayName" : "tiltright.jpeg"
+  },
+  {
+    "libraryIdentifier" : "1aeb51440531b458fa16dd21ebbcec84",
+    "format" : "image",
+    "displayName" : "chinOut.jpeg"
+  },
+  {
+    "libraryIdentifier" : "5dc8ad4f5f7e537b6099df629b2e4bfc",
+    "format" : "image",
+    "displayName" : "chinIn.jpeg"
+  }
+]
