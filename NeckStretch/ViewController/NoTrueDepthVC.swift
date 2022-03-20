@@ -1,10 +1,3 @@
-//
-//  NoTrueDepthVC.swift
-//  NeckStretch
-//
-//  Created by xavier chia on 4/6/21.
-//
-
 import UIKit
 
 class NoTrueDepthVC: UIViewController {

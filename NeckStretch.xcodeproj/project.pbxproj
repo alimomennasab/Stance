@@ -3,11 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		733D36055806F05B252CBB06 /* Pods_NeckStretch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6073791A4664129EC85D9BD6 /* Pods_NeckStretch.framework */; };
+		837D1CDA27E4709A0003C2FA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 837D1CD927E4709A0003C2FA /* GoogleService-Info.plist */; };
+		837D1CDD27E4768E0003C2FA /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 837D1CDC27E4768E0003C2FA /* FirebaseAnalytics */; };
 		95037B4F267EB93B00574A12 /* start.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 95037B4E267EB93B00574A12 /* start.mp3 */; };
 		95037B54267EBB1300574A12 /* turnLeft.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 95037B53267EBB1300574A12 /* turnLeft.mp3 */; };
 		95037B56267EBB1E00574A12 /* turnRight.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 95037B55267EBB1E00574A12 /* turnRight.mp3 */; };
@@ -25,7 +27,6 @@
 		9524733B26452A9B0037B81D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9524733926452A9B0037B81D /* LaunchScreen.storyboard */; };
 		952BDD54267D52D3005C1D35 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 952BDD53267D52D3005C1D35 /* Notifications.swift */; };
 		9551328E2669A769002EEA00 /* NoTrueDepthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9551328D2669A769002EEA00 /* NoTrueDepthVC.swift */; };
-		95796435267AD07E00D68660 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 95796434267AD07E00D68660 /* GoogleService-Info.plist */; };
 		957CB9BA26814D30004CCE0F /* 3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 957CB9B726814D30004CCE0F /* 3.mp3 */; };
 		957CB9BB26814D30004CCE0F /* 1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 957CB9B826814D30004CCE0F /* 1.mp3 */; };
 		957CB9BC26814D30004CCE0F /* 2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 957CB9B926814D30004CCE0F /* 2.mp3 */; };
@@ -39,6 +40,7 @@
 		0498863AE8FE227768F59D8B /* Pods-NeckStretch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeckStretch.debug.xcconfig"; path = "Target Support Files/Pods-NeckStretch/Pods-NeckStretch.debug.xcconfig"; sourceTree = "<group>"; };
 		6073791A4664129EC85D9BD6 /* Pods_NeckStretch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NeckStretch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		66350CA7ECB83E350998DD82 /* Pods-NeckStretch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeckStretch.release.xcconfig"; path = "Target Support Files/Pods-NeckStretch/Pods-NeckStretch.release.xcconfig"; sourceTree = "<group>"; };
+		837D1CD927E4709A0003C2FA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		95037B4E267EB93B00574A12 /* start.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = start.mp3; sourceTree = "<group>"; };
 		95037B53267EBB1300574A12 /* turnLeft.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = turnLeft.mp3; sourceTree = "<group>"; };
 		95037B55267EBB1E00574A12 /* turnRight.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = turnRight.mp3; sourceTree = "<group>"; };
@@ -58,7 +60,6 @@
 		9524733C26452A9B0037B81D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		952BDD53267D52D3005C1D35 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		9551328D2669A769002EEA00 /* NoTrueDepthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTrueDepthVC.swift; sourceTree = "<group>"; };
-		95796434267AD07E00D68660 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		957CB9B726814D30004CCE0F /* 3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 3.mp3; sourceTree = "<group>"; };
 		957CB9B826814D30004CCE0F /* 1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 1.mp3; sourceTree = "<group>"; };
 		957CB9B926814D30004CCE0F /* 2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 2.mp3; sourceTree = "<group>"; };
@@ -73,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				837D1CDD27E4768E0003C2FA /* FirebaseAnalytics in Frameworks */,
 				733D36055806F05B252CBB06 /* Pods_NeckStretch.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -92,10 +94,10 @@
 				95037B5D267EBB4300574A12 /* tiltRight.mp3 */,
 				95037B5F267EBB4B00574A12 /* chinTuck.mp3 */,
 				957CB9BF268154EB004CCE0F /* smile.mp3 */,
-				957CB9B826814D30004CCE0F /* 1.mp3 */,
-				957CB9B726814D30004CCE0F /* 3.mp3 */,
-				957CB9B926814D30004CCE0F /* 2.mp3 */,
 				957CB9BD2681547E004CCE0F /* 0.mp3 */,
+				957CB9B826814D30004CCE0F /* 1.mp3 */,
+				957CB9B926814D30004CCE0F /* 2.mp3 */,
+				957CB9B726814D30004CCE0F /* 3.mp3 */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -127,8 +129,8 @@
 				955132872669A6F8002EEA00 /* View */,
 				95037B52267EBA8900574A12 /* Sounds */,
 				9524733C26452A9B0037B81D /* Info.plist */,
-				95796434267AD07E00D68660 /* GoogleService-Info.plist */,
 				9524733726452A9B0037B81D /* Assets.xcassets */,
+				837D1CD927E4709A0003C2FA /* GoogleService-Info.plist */,
 			);
 			path = NeckStretch;
 			sourceTree = "<group>";
@@ -199,6 +201,9 @@
 			dependencies = (
 			);
 			name = NeckStretch;
+			packageProductDependencies = (
+				837D1CDC27E4768E0003C2FA /* FirebaseAnalytics */,
+			);
 			productName = roboAnimoji;
 			productReference = 9524732B26452A9A0037B81D /* NeckStretch.app */;
 			productType = "com.apple.product-type.application";
@@ -226,6 +231,9 @@
 				Base,
 			);
 			mainGroup = 9524732226452A9A0037B81D;
+			packageReferences = (
+				837D1CDB27E4768E0003C2FA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 9524732C26452A9A0037B81D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -245,7 +253,6 @@
 				957CB9BE2681547E004CCE0F /* 0.mp3 in Resources */,
 				95037B58267EBB2A00574A12 /* lookUp.mp3 in Resources */,
 				95037B4F267EB93B00574A12 /* start.mp3 in Resources */,
-				95796435267AD07E00D68660 /* GoogleService-Info.plist in Resources */,
 				957CB9BB26814D30004CCE0F /* 1.mp3 in Resources */,
 				95037B5A267EBB3200574A12 /* lookDown.mp3 in Resources */,
 				95037B5E267EBB4300574A12 /* tiltRight.mp3 in Resources */,
@@ -253,6 +260,7 @@
 				9524733826452A9B0037B81D /* Assets.xcassets in Resources */,
 				9524733626452A9A0037B81D /* Main.storyboard in Resources */,
 				95037B5C267EBB3A00574A12 /* tiltLeft.mp3 in Resources */,
+				837D1CDA27E4709A0003C2FA /* GoogleService-Info.plist in Resources */,
 				95037B56267EBB1E00574A12 /* turnRight.mp3 in Resources */,
 				957CB9C0268154EB004CCE0F /* smile.mp3 in Resources */,
 				957CB9BA26814D30004CCE0F /* 3.mp3 in Resources */,
@@ -410,7 +418,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -465,7 +473,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -484,14 +492,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 14;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = T4CL79J5Y8;
+				DEVELOPMENT_TEAM = SP75CV626V;
 				INFOPLIST_FILE = NeckStretch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.xavierchia.NeckStretch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alimomennasab.Stance;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -506,14 +514,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 14;
-				DEVELOPMENT_TEAM = T4CL79J5Y8;
+				DEVELOPMENT_TEAM = SP75CV626V;
 				INFOPLIST_FILE = NeckStretch/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.2;
-				PRODUCT_BUNDLE_IDENTIFIER = com.xavierchia.NeckStretch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.alimomennasab.Stance;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -542,6 +550,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		837D1CDB27E4768E0003C2FA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.13.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		837D1CDC27E4768E0003C2FA /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 837D1CDB27E4768E0003C2FA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9524732326452A9A0037B81D /* Project object */;
 }

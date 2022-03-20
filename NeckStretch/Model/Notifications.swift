@@ -1,10 +1,3 @@
-//
-//  Notifications.swift
-//  NeckStretch
-//
-//  Created by xavier chia on 19/6/21.
-//
-
 import UIKit
 import UserNotifications
 
@@ -25,8 +18,8 @@ struct LocalNotifications {
                 
         let content = UNMutableNotificationContent()
         
-        content.title = "Neck Stretch"
-        content.body = "Time to stretch your neck :)"
+        content.title = "Stance"
+        content.body = "Time to stretch your neck!"
         content.sound = UNNotificationSound.defaultCritical
         content.badge = 1
         

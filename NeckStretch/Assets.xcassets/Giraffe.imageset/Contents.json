@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "logoRounded.png",
+      "filename" : "256.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "logoRounded@2x.png",
+      "filename" : "256-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "logoRounded@3x.png",
+      "filename" : "256-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

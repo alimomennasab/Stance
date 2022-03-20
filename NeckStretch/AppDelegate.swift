@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  roboAnimoji
-//
-//  Created by xavier chia on 7/5/21.
-//
-
 import UIKit
 import Firebase
 import AVFoundation

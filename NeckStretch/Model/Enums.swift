@@ -1,10 +1,3 @@
-//
-//  Enums.swift
-//  NeckStretch
-//
-//  Created by xavier chia on 4/6/21.
-//
-
 import UIKit
 
 enum Segues {

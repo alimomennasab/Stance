@@ -1,10 +1,3 @@
-//
-//  Anchors.swift
-//  NeckStretch
-//
-//  Created by xavier chia on 23/6/21.
-//
-
 import UIKit
 import RealityKit
 import ARKit

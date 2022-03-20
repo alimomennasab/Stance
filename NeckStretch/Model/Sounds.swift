@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  NeckStretch
-//
-//  Created by xavier chia on 20/6/21.
-//
-
 import UIKit
 import AVFoundation
 
