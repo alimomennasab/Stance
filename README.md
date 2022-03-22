@@ -27,3 +27,4 @@ Challenge
 Problem: How to detect head poses using the face anchor?
 
 Solution: Using Euler's angles to translate 3D coordinates to yaw, pitch, and roll, similar to the axis rotation of an aeroplane.
+# Stance
