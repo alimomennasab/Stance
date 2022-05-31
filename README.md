@@ -6,10 +6,10 @@ Stance is an interactive neck-stretching app that uses ARKIT to measure the rota
 ## Key Features
 1. Converts ARKIT 3D coordinates to yaw, pitch, and roll using Euler angles
 2. Suggests 8 neck-stretching exercises
-3. Text-to-speech instructions provided for every stretch
-4. Successful head rotation indicated by audio and haptic notifications
-5. Randomized stretch completion screen 
-5. Sends tri-daily (morning, afternoon, evening) reminders to stretch your neck
+3. Provides text-to-speech instructions for each stretch
+4. Indicates successful head rotation through audio and haptic notifications
+5. Randomizes the stretch completion screen 👀
+5. Sends morning, afternoon, and evening reminders to stretch your neck
 ## Tech Stack
 1. RealityKit
 2. ARKIT
